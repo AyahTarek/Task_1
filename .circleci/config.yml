@@ -33,7 +33,7 @@ jobs:
       - checkout
       - run:
           name: "Say My Name"
-          command: "echo Hello Ayah!"
+          command: "echo Hello $MY_ENV_VAR!"
 
 workflows:
   say-hello-workflow:

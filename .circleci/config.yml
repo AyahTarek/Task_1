@@ -1,35 +1,24 @@
 version: 2.1
 
+commands:
+  print_pipeline_id:
+    description: "This command prints pipeline id"
+    parameters: 
+      id:
+        type: string
+    steps:
+      - run: echo << parameters.id >>
+
 jobs:
 
-  Save-hello-world:
-
+  use_commands:
     docker:
       - image: circleci/node:13.8.0
-
     steps:
-      - run: echo "hello world" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-
-  print-hello-world:
-
-    docker:
-      - image: circleci/node:13.8.0
-
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt
-  
+      - print_pipeline_id:
+          id: << pipeline.id >>
 
 workflows:
-  say-hello-workflow:
+  my_workflow:
     jobs:
-      - Save-hello-world
-      - print-hello-world:
-          requires:
-            - Save-hello-world
+      - use_commands

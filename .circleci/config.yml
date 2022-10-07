@@ -33,6 +33,6 @@ workflows:
       - test:
           requires: 
             - build
-      - Analyze:
+      - analyze:
           requires:
             - test
